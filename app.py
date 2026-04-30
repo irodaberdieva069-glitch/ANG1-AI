@@ -4,7 +4,7 @@ import os
 
 # Sahifa sarlavhasi
 st.set_page_config(page_title="ANG1 AI", page_icon="🤖")
-st.title("🤖 ANG1 AI - Raqamli hamkor")
+st.title("🤖 ANG1 AI - gemini hamkorligi")
 
 # API kalitini xavfsiz qabul qilish
 try:
@@ -14,7 +14,7 @@ except:
 
 if api_key:
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-1.5-flash-latest')
 
     # Chat tarixini saqlash
     if "messages" not in st.session_state:
