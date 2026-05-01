@@ -21,10 +21,10 @@ def render_banner():
     
     try:
         # Rasmni yuklash
-        image = Image.open('IMG_1541.jpg')
+        image = Image.open('IMG_1541.png')
         st.image(image, use_container_width=True)
     except FileNotFoundError:
-        st.error("Xatolik: 'IMG_1541.jpg' fayli topilmadi.")
+        st.error("Xatolik: 'IMG_1541.png' fayli topilmadi.")
 
 # 3. Asosiy dastur qismi
 def main():
