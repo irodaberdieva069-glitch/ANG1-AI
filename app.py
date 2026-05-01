@@ -2,20 +2,20 @@ import streamlit as st
 import google.generativeai as genai
 
 # 1. Sahifa sozlamalari
-st.set_page_config(page_title="ANG1 AI", page_icon="🤖")
+st.set_page_config(page_title="AN1 AI", page_icon="🤖")
 
 # 2. Yon menyuga rasm va ma'lumot qo'yish
 with st.sidebar:
     # GitHub'dagi rasm nomiga moslab yozildi
-    st.image("IMG_1539.png", use_container_width=True) 
-    st.title("ANG1 AI")
+    st.image("IMG_1530.png", use_container_width=True) 
+    st.title("AN1 AI")
     st.write("Innovatsion tibbiy texnik tizim")
     
     # API kaliti
     api_key = st.text_input("Google API Kalitingizni kiriting:", type="password")
 
 # 3. Asosiy sahifa
-st.title("🤖 ANG1 AI")
+st.title("🤖 AN1 AI")
 
 if api_key:
     genai.configure(api_key=api_key)
@@ -23,7 +23,7 @@ if api_key:
     # AI Modelini sozlash
     model = genai.GenerativeModel(
         model_name='gemini-2.0-flash', # Model nomini yangiladim
-        system_instruction="Sizning ismingiz ANG1 AI. Sizni Abdulaziz Nematov yaratgan. Siz tibbiyot texnikumidagi ta'lim jarayonida yordam berasiz."
+        system_instruction="Sizning ismingiz AN1 AI. Sizni Abdulaziz Nematov yaratgan. Siz tibbiyot texnikumidagi ta'lim jarayonida yordam berasiz."
     )
 
     # 4. Suhbat tarixini saqlash
