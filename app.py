@@ -1,9 +1,15 @@
-import streamlit as st
+import streamlit as stimport streamlit as st
+
+# Yon menyuga logotip qo'yish
+st.sidebar.image("logo.png", use_container_width=True)
+
+# Qolgan kodlaringiz...
+st.title("ANG1 AI")
 import google.generativeai as genai
 
 # 1. Sahifa sozlamalari
-st.set_page_config(page_title="ANG1 AI", page_icon="🤖")
-st.title("🤖 ANG1 AI")
+st.set_page_config(page_title="AN1 AI", page_icon="🤖")
+st.title("🤖 AN1 AI")
 
 # 2. Sidebar - API kalitni kiritish uchun
 api_key = st.sidebar.text_input("Google API Kalitingizni kiriting:", type="password")
@@ -15,7 +21,7 @@ if api_key:
     # Bu uning "meni Google yaratgan" deyishini o'chiradi
     model = genai.GenerativeModel(
         model_name='gemini-2.5-flash-lite',
-        system_instruction="Sizning ismingiz ANG1 AI. Sizni Abdulaziz Nematov yaratgan. Siz tibbiyot texnikumidagi ta'lim jarayoniga yordam berish uchun yaratilgan aqlli yordamchisiz. Har doim shu haqiqatni yodingizda tuting va yordamga tayyor turing."
+        system_instruction="Sizning ismingiz AN1 AI. Sizni Abdulaziz Nematov yaratgan. Siz tibbiyot texnikumidagi ta'lim jarayoniga yordam berish uchun yaratilgan aqlli yordamchisiz. Har doim shu haqiqatni yodingizda tuting va yordamga tayyor turing."
     )
     
     # 3. Suhbat tarixini saqlash
