@@ -39,6 +39,6 @@ if api_key:
                 st.session_state.messages.append({"role": "assistant", "content": response.text})
                 
     except Exception as e:
-        st.error(f"Xatolik yuz berdi: {e}")8
+        st.error(f"Xatolik yuz berdi: {e}")
 else:
     st.info("Iltimos, chap tarafdagi panelga Google API kalitingizni kiriting.")
