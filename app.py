@@ -1,53 +1,51 @@
 import streamlit as st
-import google.generativeai as genai
+from PIL import Image
 
 # 1. Sahifa sozlamalari
-st.set_page_config(page_title="AN1 AI", page_icon="🤖")
+st.set_page_config(page_title="AN1 AI", layout="wide")
 
-# 2. Yon menyuga rasm va ma'lumot qo'yish
-with st.sidebar:
-    # GitHub'dagi rasm nomiga moslab yozildi
-    st.image("IMG_1530.png", use_container_width=True) 
-    st.title("AN1 AI")
-    st.write("Innovatsion tibbiy texnik tizim")
-    
-    # API kaliti
-    api_key = st.text_input("Google API Kalitingizni kiriting:", type="password")
-
-# 3. Asosiy sahifa
-st.title("🤖 AN1 AI")
-
-if api_key:
-    genai.configure(api_key=api_key)
-    
-    # AI Modelini sozlash
-    model = genai.GenerativeModel(
-        model_name='gemini-2.0-flash', # Model nomini yangiladim
-        system_instruction="Sizning ismingiz AN1 AI. Sizni Abdulaziz Nematov yaratgan. Siz tibbiyot texnikumidagi ta'lim jarayonida yordam berasiz."
+# 2. Banner (Hero Section) funksiyasi
+def render_banner():
+    st.markdown(
+        """
+        <style>
+        .banner-img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
     )
+    
+    try:
+        # Rasmni yuklash
+        image = Image.open('IMG_1530.jpg')
+        st.image(image, use_container_width=True)
+    except FileNotFoundError:
+        st.error("Xatolik: 'IMG_1530.jpg' fayli topilmadi.")
 
-    # 4. Suhbat tarixini saqlash
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+# 3. Asosiy dastur qismi
+def main():
+    render_banner()
+    
+    # Loyiha nomi endi AN1 AI
+    st.title("AN1 AI - Innovatsion Tibbiy Texnik Tizim")
+    st.markdown("---")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Bo'limlar")
+        st.write("• Farmatsiya")
+        st.write("• Hamshiralik ishi")
+        st.write("• Klinik fanlar")
+        
+    with col2:
+        st.subheader("Tizim holati")
+        st.success("Tizim faol")
+        st.info("AN1 AI boshqaruv paneli - 2026")
 
-    # Tarixni ekranga chiqarish
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    # Foydalanuvchi inputi
-    if prompt := st.chat_input("Savolingizni yozing..."):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        # AI javobi
-        with st.chat_message("assistant"):
-            try:
-                response = model.generate_content(prompt)
-                st.markdown(response.text)
-                st.session_state.messages.append({"role": "assistant", "content": response.text})
-            except Exception as e:
-                st.error(f"Xatolik yuz berdi: {e}")
-else:
-    st.info("Iltimos, chap tarafdagi menyuda API kalitingizni kiriting.")
+if __name__ == "__main__":
+    main()
