@@ -7,7 +7,7 @@ st.set_page_config(page_title="ANG1 AI", page_icon="🤖")
 # 2. Yon menyuga rasm va ma'lumot qo'yish
 with st.sidebar:
     # GitHub'dagi rasm nomiga moslab yozildi
-    st.image("IMG_1530.png", use_container_width=True) 
+    st.image("IMG_1539.png", use_container_width=True) 
     st.title("ANG1 AI")
     st.write("Innovatsion tibbiy texnik tizim")
     
