@@ -4,13 +4,14 @@ import google.generativeai as genai
 # 1. Sahifa sozlamalari
 st.set_page_config(page_title="ANG1 AI", page_icon="🤖")
 
-# Yon menyuga logotip va sarlavha qo'yish
+# 2. Yon menyuga rasm va ma'lumot qo'yish
 with st.sidebar:
-    st.image("logo.png", use_container_width=True) # Fayl nomi 'logo.png' ekanligiga ishonch hosil qiling
+    # GitHub'dagi rasm nomiga moslab yozildi
+    st.image("IMG_1530.png", use_container_width=True) 
     st.title("ANG1 AI")
     st.write("Innovatsion tibbiy texnik tizim")
     
-    # 2. API kalitini kiritish
+    # API kaliti
     api_key = st.text_input("Google API Kalitingizni kiriting:", type="password")
 
 # 3. Asosiy sahifa
@@ -19,9 +20,9 @@ st.title("🤖 ANG1 AI")
 if api_key:
     genai.configure(api_key=api_key)
     
-    # Modelni sozlash
+    # AI Modelini sozlash
     model = genai.GenerativeModel(
-        model_name='gemini-2.5-flash-lite',
+        model_name='gemini-2.0-flash', # Model nomini yangiladim
         system_instruction="Sizning ismingiz ANG1 AI. Sizni Abdulaziz Nematov yaratgan. Siz tibbiyot texnikumidagi ta'lim jarayonida yordam berasiz."
     )
 
@@ -34,7 +35,7 @@ if api_key:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # Foydalanuvchi kiritgan matnni qayta ishlash
+    # Foydalanuvchi inputi
     if prompt := st.chat_input("Savolingizni yozing..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -42,8 +43,11 @@ if api_key:
 
         # AI javobi
         with st.chat_message("assistant"):
-            response = model.generate_content(prompt)
-            st.markdown(response.text)
-            st.session_state.messages.append({"role": "assistant", "content": response.text})
+            try:
+                response = model.generate_content(prompt)
+                st.markdown(response.text)
+                st.session_state.messages.append({"role": "assistant", "content": response.text})
+            except Exception as e:
+                st.error(f"Xatolik yuz berdi: {e}")
 else:
-    st.warning("Iltimos, chap tarafdagi menyuda API kalitingizni kiriting.")
+    st.info("Iltimos, chap tarafdagi menyuda API kalitingizni kiriting.")
