@@ -1,15 +1,13 @@
 import streamlit as st
 import google.generativeai as genai
 
-# API kalitni yuklash
-api_key = st.secrets["GEMINI_API_KEY"]
-genai.configure(api_key=api_key)
+# API kalitni to'g'ridan-to'g'ri chaqirish
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-st.title("🤖 AN1 AI va Tibbiyot") 
+st.title("🤖 AN1 AI va Tibbiyot")
 
-# MODELNI O'ZGARTIRDIK: gemini-1.5-flash o'rniga "gemini-pro"
-# Bu nom barcha kutubxona versiyalarida 100% ishlaydi.
-model = genai.GenerativeModel('gemini-pro')
+# Modelni to'g'ridan-to'g'ri chaqirish (transport='rest' v1beta xatosini o'ldiradi)
+model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -25,7 +23,7 @@ if prompt := st.chat_input("Savolingni yoz..."):
 
     with st.chat_message("assistant"):
         try:
-            # generate_content usuli
+            # Modelni to'g'ridan-to'g'ri chaqirish
             response = model.generate_content(prompt)
             st.markdown(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
