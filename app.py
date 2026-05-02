@@ -14,7 +14,7 @@ st.title("🤖 AN1 AI Pro")
 
 # Model: Flash barqaror ishlashi uchun qoldirildi, 
 # lekin nomi Pro bo'lib ko'rinadi
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-1.5-pro')
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
