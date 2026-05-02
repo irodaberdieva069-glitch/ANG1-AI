@@ -1,19 +1,15 @@
 import streamlit as st
 import google.generativeai as genai
 
-# API kalitni sozlash
-try:
-    api_key = st.secrets["GEMINI_API_KEY"]
-    genai.configure(api_key=api_key)
-except Exception as e:
-    st.error(f"API kalit xatosi: {e}")
-    st.stop()
+# API kalitni yuklash
+api_key = st.secrets["GEMINI_API_KEY"]
+genai.configure(api_key=api_key)
 
 st.title("🤖 AN1 AI va Tibbiyot") 
 
-# MODELNI O'ZGARTIRDIK: 
-# 'gemini-1.5-flash' - bu eng ishonchli nom.
-model = genai.GenerativeModel('gemini-1.5-flash')
+# MODELNI O'ZGARTIRDIK: gemini-1.5-flash o'rniga "gemini-pro"
+# Bu nom barcha kutubxona versiyalarida 100% ishlaydi.
+model = genai.GenerativeModel('gemini-pro')
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -29,9 +25,9 @@ if prompt := st.chat_input("Savolingni yoz..."):
 
     with st.chat_message("assistant"):
         try:
-            # generate_content
+            # generate_content usuli
             response = model.generate_content(prompt)
             st.markdown(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
         except Exception as e:
-            st.error(f"Xatolik: {e}. Iltimos, API kalitingiz Google AI Studio-da to'g'ri yaratilganiga ishonch hosil qiling.")
+            st.error(f"Xatolik: {e}")
