@@ -1,31 +1,27 @@
 import streamlit as st
 import google.generativeai as genai
 
-# API kalitni to'g'ridan-to'g'ri chaqirish
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+# API kalitni to'g'ridan-to'g'ri o'zgaruvchiga olamiz
+api_key = st.secrets.get("GEMINI_API_KEY")
 
-st.title("🤖 AN1 AI va Tibbiyot")
+if not api_key:
+    st.error("Secrets-da GEMINI_API_KEY topilmadi!")
+    st.stop()
 
-# Modelni to'g'ridan-to'g'ri chaqirish (transport='rest' v1beta xatosini o'ldiradi)
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+genai.configure(api_key=api_key)
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+# Modelni chaqirish
+model = genai.GenerativeModel("gemini-1.5-flash")
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+st.title("🤖 AN1 AI Pro")
 
 if prompt := st.chat_input("Savolingni yoz..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-
+    
     with st.chat_message("assistant"):
         try:
-            # Modelni to'g'ridan-to'g'ri chaqirish
             response = model.generate_content(prompt)
             st.markdown(response.text)
-            st.session_state.messages.append({"role": "assistant", "content": response.text})
         except Exception as e:
             st.error(f"Xatolik: {e}")
